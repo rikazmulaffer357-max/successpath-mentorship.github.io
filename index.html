@@ -5,514 +5,814 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SuccessPath Mentorship — Your Future Starts Here</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --blue: #3a7ca5;
-    --gold: #d4a843;
-    --dark-blue: #1e3a52;
-    --light-blue: #e8f4fd;
-    --cream: #fdfaf4;
-    --text: #1a2332;
-    --muted: #6b7a8d;
-  }
-
-- { margin: 0; padding: 0; box-sizing: border-box; }
-
-html { scroll-behavior: smooth; }
-
-body {
-font-family: ‘DM Sans’, sans-serif;
-background: var(–cream);
-color: var(–text);
-overflow-x: hidden;
+:root {
+  --blue: #2d6a9f;
+  --blue-dark: #1a3f5f;
+  --blue-light: #e8f3fb;
+  --gold: #c9931a;
+  --gold-light: #f5e6c8;
+  --gold-bright: #e8a820;
+  --cream: #faf8f4;
+  --white: #ffffff;
+  --text: #1c2b3a;
+  --muted: #5a6e82;
+  --border: rgba(45,106,159,0.12);
+  --shadow: 0 4px 32px rgba(26,63,95,0.10);
+  --shadow-lg: 0 16px 60px rgba(26,63,95,0.16);
+  --max: 1280px;
+  --radius: 16px;
+  --radius-lg: 28px;
 }
 
-/* ── NAV ── */
-nav {
-position: fixed; top: 0; width: 100%; z-index: 100;
-background: rgba(253,250,244,0.92);
-backdrop-filter: blur(12px);
-border-bottom: 1px solid rgba(212,168,67,0.2);
-padding: 0 5%;
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body { font-family: ‘Plus Jakarta Sans’, sans-serif; background: var(–cream); color: var(–text); overflow-x: hidden; line-height: 1.6; }
+img { max-width: 100%; display: block; }
+a { text-decoration: none; color: inherit; }
+
+/* ═══════════════════════════════════════
+UTILITIES
+═══════════════════════════════════════ */
+.container { max-width: var(–max); margin: 0 auto; padding: 0 clamp(1.25rem, 5vw, 5rem); }
+.section-tag {
+display: inline-flex; align-items: center; gap: 0.5rem;
+background: var(–gold-light); color: var(–gold);
+font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em;
+text-transform: uppercase; padding: 0.35rem 1rem; border-radius: 50px;
+margin-bottom: 1.2rem;
+}
+.section-tag::before { content: ‘◆’; font-size: 0.55rem; }
+.section-title {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: clamp(2rem, 4vw, 3.2rem);
+font-weight: 700; line-height: 1.15;
+color: var(–blue-dark); margin-bottom: 1rem;
+}
+.section-title em { color: var(–gold); font-style: normal; }
+.section-sub { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(–muted); line-height: 1.75; max-width: 560px; }
+
+.btn {
+display: inline-flex; align-items: center; gap: 0.5rem;
+padding: 0.85rem 2rem; border-radius: 50px;
+font-family: ‘Plus Jakarta Sans’, sans-serif;
+font-weight: 600; font-size: 0.95rem;
+cursor: pointer; border: none; transition: all 0.25s; text-decoration: none;
+}
+.btn-primary { background: var(–blue); color: white; box-shadow: 0 6px 24px rgba(45,106,159,0.35); }
+.btn-primary:hover { background: var(–blue-dark); transform: translateY(-2px); box-shadow: 0 10px 32px rgba(45,106,159,0.4); }
+.btn-gold { background: var(–gold); color: white; box-shadow: 0 6px 24px rgba(201,147,26,0.35); }
+.btn-gold:hover { background: #b07d10; transform: translateY(-2px); }
+.btn-outline { background: transparent; color: var(–blue); border: 2px solid var(–blue); }
+.btn-outline:hover { background: var(–blue); color: white; }
+.btn-white { background: white; color: var(–blue-dark); box-shadow: 0 6px 24px rgba(0,0,0,0.15); }
+.btn-white:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(0,0,0,0.2); }
+
+/* ═══════════════════════════════════════
+NAVBAR
+═══════════════════════════════════════ */
+#navbar {
+position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+background: rgba(250,248,244,0.95);
+backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+border-bottom: 1px solid var(–border);
+transition: box-shadow 0.3s;
+}
+#navbar.scrolled { box-shadow: 0 2px 20px rgba(26,63,95,0.1); }
+.nav-inner {
 display: flex; align-items: center; justify-content: space-between;
-height: 70px;
+height: 72px; gap: 2rem;
 }
-.nav-logo {
-font-family: ‘Playfair Display’, serif;
-font-size: 1.4rem; font-weight: 700;
-color: var(–blue);
+.nav-brand {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 1.5rem; font-weight: 700; color: var(–blue-dark);
+white-space: nowrap; flex-shrink: 0;
 }
-.nav-logo span { color: var(–gold); }
-.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-brand span { color: var(–gold); }
+.nav-links {
+display: flex; align-items: center; gap: 2rem;
+list-style: none;
+}
 .nav-links a {
-text-decoration: none; color: var(–text);
-font-size: 0.9rem; font-weight: 500;
-transition: color 0.2s;
+font-size: 0.9rem; font-weight: 500; color: var(–text);
+transition: color 0.2s; white-space: nowrap;
 }
 .nav-links a:hover { color: var(–gold); }
-.nav-cta {
-background: var(–gold);
-color: white; border: none;
-padding: 0.6rem 1.4rem;
-border-radius: 50px;
-font-family: ‘DM Sans’, sans-serif;
-font-weight: 600; font-size: 0.9rem;
-cursor: pointer; transition: all 0.2s;
+.nav-actions { display: flex; align-items: center; gap: 1rem; flex-shrink: 0; }
+.hamburger {
+display: none; flex-direction: column; gap: 5px;
+background: none; border: none; cursor: pointer; padding: 4px;
 }
-.nav-cta:hover { background: var(–dark-blue); transform: translateY(-1px); }
+.hamburger span { display: block; width: 24px; height: 2px; background: var(–text); border-radius: 2px; transition: all 0.3s; }
 
-/* ── HERO ── */
+/* Mobile nav drawer */
+.mobile-nav {
+display: none; position: fixed;
+top: 72px; left: 0; right: 0; bottom: 0;
+background: var(–cream); z-index: 999;
+flex-direction: column; padding: 2rem 1.5rem;
+gap: 0.5rem; overflow-y: auto;
+}
+.mobile-nav.open { display: flex; }
+.mobile-nav a {
+font-size: 1.1rem; font-weight: 500; color: var(–text);
+padding: 0.9rem 1rem; border-radius: 12px;
+transition: background 0.2s;
+}
+.mobile-nav a:hover { background: var(–blue-light); color: var(–blue); }
+.mobile-nav .btn { margin-top: 1rem; justify-content: center; }
+
+/* ═══════════════════════════════════════
+HERO
+═══════════════════════════════════════ */
 .hero {
 min-height: 100vh;
-display: flex; align-items: center;
-padding: 100px 5% 60px;
+display: grid;
+grid-template-columns: 1fr 1fr;
+align-items: center;
+gap: 4rem;
+padding-top: 72px;
 position: relative;
 overflow: hidden;
 }
+
+/* Decorative background shapes */
 .hero::before {
 content: ‘’;
-position: absolute; top: -100px; right: -150px;
-width: 600px; height: 600px;
-background: radial-gradient(circle, rgba(212,168,67,0.12) 0%, transparent 70%);
-border-radius: 50%;
+position: absolute; top: 0; right: 0;
+width: 55%; height: 100%;
+background: linear-gradient(135deg, var(–blue-light) 0%, rgba(232,243,251,0.4) 100%);
+clip-path: polygon(8% 0, 100% 0, 100% 100%, 0% 100%);
+z-index: 0;
 }
-.hero::after {
-content: ‘’;
-position: absolute; bottom: -80px; left: -100px;
-width: 400px; height: 400px;
-background: radial-gradient(circle, rgba(58,124,165,0.1) 0%, transparent 70%);
-border-radius: 50%;
+.hero-left {
+padding: clamp(2rem, 6vw, 6rem) 0 clamp(2rem, 6vw, 6rem) clamp(1.25rem, 5vw, 5rem);
+position: relative; z-index: 1;
+animation: fadeUp 0.8s ease both;
 }
-.hero-content { max-width: 600px; animation: fadeUp 0.9s ease both; }
 .hero-badge {
 display: inline-flex; align-items: center; gap: 0.5rem;
-background: rgba(212,168,67,0.12);
-border: 1px solid rgba(212,168,67,0.3);
-color: var(–gold);
-padding: 0.4rem 1rem; border-radius: 50px;
-font-size: 0.82rem; font-weight: 600;
-margin-bottom: 1.5rem;
-animation: fadeUp 0.9s 0.1s ease both;
+background: var(–gold-light); border: 1px solid rgba(201,147,26,0.25);
+color: var(–gold); font-size: 0.82rem; font-weight: 600;
+padding: 0.45rem 1.1rem; border-radius: 50px;
+margin-bottom: 1.8rem;
 }
 .hero h1 {
-font-family: ‘Playfair Display’, serif;
-font-size: clamp(2.4rem, 5vw, 3.8rem);
-line-height: 1.15;
-color: var(–dark-blue);
-margin-bottom: 1.2rem;
-animation: fadeUp 0.9s 0.2s ease both;
+font-family: ‘Cormorant Garamond’, serif;
+font-size: clamp(2.4rem, 4.5vw, 4.2rem);
+font-weight: 700; line-height: 1.1;
+color: var(–blue-dark);
+margin-bottom: 1.4rem;
 }
-.hero h1 em { color: var(–gold); font-style: normal; }
-.hero p {
-font-size: 1.1rem; line-height: 1.7;
-color: var(–muted); max-width: 480px;
-margin-bottom: 2rem;
-animation: fadeUp 0.9s 0.3s ease both;
+.hero h1 em { color: var(–gold); font-style: normal; display: block; }
+.hero-desc {
+font-size: clamp(1rem, 1.5vw, 1.1rem);
+color: var(–muted); line-height: 1.78;
+max-width: 480px; margin-bottom: 2.2rem;
 }
-.hero-btns {
-display: flex; gap: 1rem; flex-wrap: wrap;
-animation: fadeUp 0.9s 0.4s ease both;
+.hero-btns { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 3rem; }
+.hero-proof {
+display: flex; align-items: center; gap: 1.5rem;
+flex-wrap: wrap;
 }
-.btn-primary {
-background: var(–blue);
-color: white; border: none;
-padding: 0.85rem 2rem; border-radius: 50px;
-font-family: ‘DM Sans’, sans-serif;
-font-weight: 600; font-size: 1rem;
-cursor: pointer; transition: all 0.25s;
-box-shadow: 0 4px 20px rgba(58,124,165,0.3);
+.proof-avatars { display: flex; }
+.proof-avatar {
+width: 36px; height: 36px; border-radius: 50%;
+border: 2px solid white;
+background: linear-gradient(135deg, var(–blue), var(–gold));
+display: flex; align-items: center; justify-content: center;
+font-size: 0.75rem; font-weight: 700; color: white;
+margin-left: -10px;
 }
-.btn-primary:hover { background: var(–dark-blue); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(58,124,165,0.4); }
-.btn-outline {
-background: transparent;
-color: var(–blue); border: 2px solid var(–blue);
-padding: 0.85rem 2rem; border-radius: 50px;
-font-family: ‘DM Sans’, sans-serif;
-font-weight: 600; font-size: 1rem;
-cursor: pointer; transition: all 0.25s;
-}
-.btn-outline:hover { background: var(–blue); color: white; }
+.proof-avatar:first-child { margin-left: 0; }
+.proof-text { font-size: 0.88rem; color: var(–muted); }
+.proof-text strong { color: var(–text); display: block; }
 
-.hero-visual {
-position: absolute; right: 5%; top: 50%;
-transform: translateY(-50%);
-width: min(420px, 40vw);
-animation: float 4s ease-in-out infinite;
+/* Hero Right — Visual Dashboard */
+.hero-right {
+padding: clamp(2rem, 4vw, 5rem) clamp(1.25rem, 5vw, 5rem) clamp(2rem, 4vw, 5rem) 0;
+position: relative; z-index: 1;
+animation: fadeUp 0.8s 0.15s ease both;
 }
+.hero-card-main {
+background: white;
+border-radius: var(–radius-lg);
+padding: 2rem;
+box-shadow: var(–shadow-lg);
+position: relative;
+}
+.hero-card-main h3 {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 1.25rem; color: var(–blue-dark);
+margin-bottom: 1.5rem; font-weight: 600;
+}
+.progress-list { display: flex; flex-direction: column; gap: 1.1rem; }
+.progress-item label {
+display: flex; justify-content: space-between;
+font-size: 0.88rem; font-weight: 500; color: var(–text);
+margin-bottom: 0.4rem;
+}
+.progress-item label span { color: var(–gold); font-weight: 700; }
+.progress-bar { height: 8px; background: var(–blue-light); border-radius: 50px; overflow: hidden; }
+.progress-fill {
+height: 100%; border-radius: 50px;
+background: linear-gradient(90deg, var(–blue), var(–gold));
+animation: fillBar 1.5s ease both;
+}
+@keyframes fillBar { from { width: 0 !important; } }
 
-/* ── STATS ── */
-.stats {
-background: var(–dark-blue);
-padding: 4rem 5%;
+/* Floating cards */
+.float-card {
+position: absolute;
+background: white; border-radius: var(–radius);
+padding: 0.9rem 1.2rem;
+box-shadow: 0 8px 32px rgba(26,63,95,0.15);
+display: flex; align-items: center; gap: 0.7rem;
+animation: float 3s ease-in-out infinite;
+white-space: nowrap;
+}
+.float-card-1 { top: -1rem; left: -2rem; animation-delay: 0s; }
+.float-card-2 { bottom: 2rem; right: -1.5rem; animation-delay: 1.5s; }
+.float-icon { font-size: 1.4rem; }
+.float-info strong { display: block; font-size: 0.88rem; color: var(–text); }
+.float-info span { font-size: 0.78rem; color: var(–muted); }
+
+/* ═══════════════════════════════════════
+STATS BAND
+═══════════════════════════════════════ */
+.stats-band {
+background: var(–blue-dark);
+padding: clamp(3rem, 5vw, 4.5rem) 0;
+}
+.stats-grid {
 display: grid;
-grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+grid-template-columns: repeat(4, 1fr);
 gap: 2rem;
+text-align: center;
 }
-.stat-item { text-align: center; }
+.stat-item { padding: 1rem; }
 .stat-num {
-font-family: ‘Playfair Display’, serif;
-font-size: 2.8rem; font-weight: 900;
-color: var(–gold);
+font-family: ‘Cormorant Garamond’, serif;
+font-size: clamp(2.4rem, 4vw, 3.5rem);
+font-weight: 700; color: var(–gold-bright);
+display: block; line-height: 1;
+}
+.stat-label { color: rgba(255,255,255,0.65); font-size: 0.9rem; margin-top: 0.5rem; }
+.stat-divider {
+width: 1px; background: rgba(255,255,255,0.1);
 display: block;
 }
-.stat-label { color: rgba(255,255,255,0.7); font-size: 0.9rem; margin-top: 0.3rem; }
 
-/* ── SECTION COMMON ── */
-section { padding: 6rem 5%; }
-.section-tag {
-color: var(–gold); font-size: 0.82rem;
-font-weight: 700; letter-spacing: 0.15em;
-text-transform: uppercase; margin-bottom: 0.8rem;
-}
-.section-title {
-font-family: ‘Playfair Display’, serif;
-font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-color: var(–dark-blue); line-height: 1.2;
-margin-bottom: 1rem;
-}
-.section-sub {
-color: var(–muted); font-size: 1.05rem;
-line-height: 1.7; max-width: 540px;
-}
-
-/* ── ABOUT ── */
-.about { background: white; }
+/* ═══════════════════════════════════════
+ABOUT
+═══════════════════════════════════════ */
+.about { padding: clamp(4rem, 8vw, 8rem) 0; background: white; }
 .about-grid {
 display: grid;
 grid-template-columns: 1fr 1fr;
-gap: 5rem; align-items: center;
-max-width: 1100px; margin: 0 auto;
+gap: clamp(3rem, 6vw, 7rem);
+align-items: center;
 }
-.about-card {
-background: var(–cream);
-border-radius: 20px;
-padding: 2.5rem;
+.about-visual { position: relative; }
+.about-img-wrap {
+background: linear-gradient(135deg, var(–blue-light) 0%, var(–gold-light) 100%);
+border-radius: var(–radius-lg);
+padding: 3rem 2.5rem;
+text-align: center;
 position: relative;
-border: 1px solid rgba(212,168,67,0.2);
+overflow: hidden;
+min-height: 380px;
+display: flex; flex-direction: column;
+align-items: center; justify-content: center; gap: 1.5rem;
 }
-.about-card::before {
-content: ‘”’;
-font-family: ‘Playfair Display’, serif;
-font-size: 8rem; color: var(–gold);
-opacity: 0.15; position: absolute;
-top: -1rem; left: 1rem; line-height: 1;
+.about-img-wrap::before {
+content: ‘’;
+position: absolute; top: -40px; right: -40px;
+width: 180px; height: 180px;
+background: rgba(45,106,159,0.08);
+border-radius: 50%;
 }
-.about-card p {
-font-size: 1.05rem; line-height: 1.75;
-color: var(–text); position: relative; z-index: 1;
+.about-icon-big { font-size: 5rem; line-height: 1; }
+.about-img-wrap h3 {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 1.6rem; color: var(–blue-dark); font-weight: 700;
 }
-.pillars {
+.about-img-wrap p { font-size: 0.95rem; color: var(–muted); max-width: 260px; line-height: 1.6; }
+.about-badge {
+position: absolute; bottom: 1.5rem; right: 1.5rem;
+background: white; border-radius: 14px;
+padding: 0.8rem 1.2rem;
+box-shadow: var(–shadow);
+text-align: left;
+}
+.about-badge strong { display: block; font-size: 1.3rem; color: var(–gold); font-weight: 700; }
+.about-badge span { font-size: 0.78rem; color: var(–muted); }
+
+.pillars-grid {
 display: grid; grid-template-columns: 1fr 1fr;
 gap: 1rem; margin-top: 2rem;
 }
 .pillar {
-background: var(–light-blue);
-border-radius: 12px; padding: 1rem;
+background: var(–cream);
+border-radius: var(–radius);
+padding: 1.2rem 1.4rem;
 border-left: 3px solid var(–blue);
+transition: transform 0.2s, box-shadow 0.2s;
 }
-.pillar-icon { font-size: 1.4rem; margin-bottom: 0.3rem; }
-.pillar h4 { font-size: 0.9rem; font-weight: 600; color: var(–dark-blue); }
-.pillar p { font-size: 0.8rem; color: var(–muted); margin-top: 0.2rem; }
+.pillar:hover { transform: translateY(-3px); box-shadow: var(–shadow); }
+.pillar-icon { font-size: 1.5rem; margin-bottom: 0.4rem; }
+.pillar h4 { font-size: 0.9rem; font-weight: 600; color: var(–blue-dark); }
+.pillar p { font-size: 0.82rem; color: var(–muted); margin-top: 0.2rem; line-height: 1.5; }
 
-/* ── SERVICES ── */
-.services { background: var(–cream); }
-.services-header { text-align: center; margin-bottom: 3.5rem; }
+/* ═══════════════════════════════════════
+SERVICES
+═══════════════════════════════════════ */
+.services { padding: clamp(4rem, 8vw, 8rem) 0; background: var(–cream); }
+.services-header { text-align: center; margin-bottom: clamp(2.5rem, 4vw, 4rem); }
 .services-header .section-sub { margin: 0 auto; }
 .services-grid {
 display: grid;
-grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-gap: 1.5rem; max-width: 1200px; margin: 0 auto;
+grid-template-columns: repeat(3, 1fr);
+gap: 1.5rem;
 }
 .service-card {
-background: white;
-border-radius: 20px; padding: 2rem;
-border: 1px solid rgba(0,0,0,0.06);
-transition: all 0.3s;
-position: relative; overflow: hidden;
+background: white; border-radius: var(–radius-lg);
+padding: clamp(1.5rem, 2.5vw, 2.2rem);
+border: 1px solid var(–border);
+transition: all 0.3s; position: relative; overflow: hidden;
+display: flex; flex-direction: column;
 }
-.service-card::after {
+.service-card::before {
 content: ‘’;
-position: absolute; bottom: 0; left: 0;
-width: 100%; height: 3px;
+position: absolute; top: 0; left: 0; right: 0; height: 3px;
 background: linear-gradient(90deg, var(–blue), var(–gold));
-transform: scaleX(0); transform-origin: left;
-transition: transform 0.3s;
+transform: scaleX(0); transform-origin: left; transition: transform 0.3s;
 }
-.service-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,0.09); }
-.service-card:hover::after { transform: scaleX(1); }
+.service-card:hover { transform: translateY(-8px); box-shadow: var(–shadow-lg); border-color: transparent; }
+.service-card:hover::before { transform: scaleX(1); }
 .service-icon {
-width: 56px; height: 56px;
-background: var(–light-blue);
-border-radius: 14px;
+width: 60px; height: 60px;
+background: var(–blue-light);
+border-radius: 16px;
 display: flex; align-items: center; justify-content: center;
-font-size: 1.6rem; margin-bottom: 1.2rem;
+font-size: 1.7rem; margin-bottom: 1.3rem; flex-shrink: 0;
 }
 .service-card h3 {
-font-family: ‘Playfair Display’, serif;
-font-size: 1.2rem; color: var(–dark-blue);
-margin-bottom: 0.6rem;
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 1.25rem; font-weight: 700;
+color: var(–blue-dark); margin-bottom: 0.7rem;
 }
-.service-card p { color: var(–muted); font-size: 0.93rem; line-height: 1.65; }
+.service-card p { color: var(–muted); font-size: 0.92rem; line-height: 1.68; flex: 1; }
+.service-link {
+display: inline-flex; align-items: center; gap: 0.4rem;
+color: var(–blue); font-size: 0.88rem; font-weight: 600;
+margin-top: 1.2rem; transition: gap 0.2s;
+}
+.service-link:hover { gap: 0.7rem; }
 
-/* ── AL RESULTS SECTION ── */
-.al-results { background: linear-gradient(135deg, var(–dark-blue) 0%, #2a5478 100%); }
-.al-results .section-title { color: white; }
-.al-results .section-tag { color: var(–gold); }
-.al-results-inner {
-max-width: 1100px; margin: 0 auto;
-display: grid; grid-template-columns: 1fr 1fr;
-gap: 4rem; align-items: center;
-}
-.al-text .section-sub { color: rgba(255,255,255,0.75); }
-.al-steps { margin-top: 2rem; display: flex; flex-direction: column; gap: 1.2rem; }
-.al-step {
-display: flex; gap: 1rem; align-items: flex-start;
-}
-.step-num {
-width: 36px; height: 36px; min-width: 36px;
-background: var(–gold);
+/* ═══════════════════════════════════════
+AL RESULTS (FEATURED)
+═══════════════════════════════════════ */
+.al-section { padding: clamp(4rem, 8vw, 8rem) 0; background: var(–blue-dark); position: relative; overflow: hidden; }
+.al-section::before {
+content: ‘’;
+position: absolute; top: -100px; right: -100px;
+width: 500px; height: 500px;
+background: radial-gradient(circle, rgba(201,147,26,0.12) 0%, transparent 70%);
 border-radius: 50%;
-display: flex; align-items: center; justify-content: center;
-font-weight: 700; font-size: 0.85rem; color: white;
 }
-.step-content h4 { color: white; font-weight: 600; font-size: 0.95rem; }
-.step-content p { color: rgba(255,255,255,0.65); font-size: 0.88rem; margin-top: 0.2rem; line-height: 1.5; }
-.al-card {
-background: rgba(255,255,255,0.08);
-border: 1px solid rgba(255,255,255,0.15);
-border-radius: 24px; padding: 2.5rem;
+.al-section::after {
+content: ‘’;
+position: absolute; bottom: -80px; left: -60px;
+width: 350px; height: 350px;
+background: radial-gradient(circle, rgba(45,106,159,0.3) 0%, transparent 70%);
+border-radius: 50%;
+}
+.al-inner {
+display: grid; grid-template-columns: 1fr 1fr;
+gap: clamp(3rem, 5vw, 6rem); align-items: center;
+position: relative; z-index: 1;
+}
+.al-section .section-title { color: white; }
+.al-section .section-sub { color: rgba(255,255,255,0.72); }
+.al-steps { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1.4rem; }
+.al-step { display: flex; gap: 1.2rem; align-items: flex-start; }
+.step-num {
+width: 38px; height: 38px; min-width: 38px;
+background: var(–gold); border-radius: 50%;
+display: flex; align-items: center; justify-content: center;
+font-weight: 700; font-size: 0.9rem; color: white;
+box-shadow: 0 4px 12px rgba(201,147,26,0.4);
+}
+.step-content h4 { color: white; font-weight: 600; font-size: 0.95rem; line-height: 1.3; }
+.step-content p { color: rgba(255,255,255,0.6); font-size: 0.87rem; margin-top: 0.25rem; line-height: 1.55; }
+
+/* Pathway Card */
+.pathway-card {
+background: rgba(255,255,255,0.07);
+border: 1px solid rgba(255,255,255,0.14);
+border-radius: var(–radius-lg); padding: 2.5rem;
 backdrop-filter: blur(10px);
 }
-.al-card h3 {
-font-family: ‘Playfair Display’, serif;
-color: var(–gold); font-size: 1.4rem; margin-bottom: 1.5rem;
+.pathway-card h3 {
+font-family: ‘Cormorant Garamond’, serif;
+color: var(–gold-bright); font-size: 1.5rem; font-weight: 700;
+margin-bottom: 1.8rem; padding-bottom: 1rem;
+border-bottom: 1px solid rgba(255,255,255,0.1);
 }
-.pathway-list { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
+.pathway-list { list-style: none; display: flex; flex-direction: column; gap: 0.85rem; margin-bottom: 2rem; }
 .pathway-list li {
-display: flex; align-items: center; gap: 0.8rem;
-color: rgba(255,255,255,0.85); font-size: 0.95rem;
+display: flex; align-items: center; gap: 1rem;
+color: rgba(255,255,255,0.82); font-size: 0.95rem;
+padding: 0.6rem 0; border-bottom: 1px solid rgba(255,255,255,0.06);
 }
-.pathway-list li::before {
-content: ‘→’;
-color: var(–gold); font-weight: 700; font-size: 1rem;
+.pathway-list li:last-child { border-bottom: none; }
+.pathway-num {
+width: 28px; height: 28px; min-width: 28px;
+background: rgba(201,147,26,0.2);
+border: 1px solid rgba(201,147,26,0.4);
+border-radius: 50%; display: flex; align-items: center; justify-content: center;
+font-size: 0.75rem; font-weight: 700; color: var(–gold-bright);
 }
 
-/* ── TESTIMONIALS ── */
-.testimonials { background: white; }
-.test-header { text-align: center; margin-bottom: 3rem; }
+/* ═══════════════════════════════════════
+TESTIMONIALS
+═══════════════════════════════════════ */
+.testimonials { padding: clamp(4rem, 8vw, 8rem) 0; background: white; }
+.test-header { text-align: center; margin-bottom: clamp(2.5rem, 4vw, 4rem); }
+.test-header .section-sub { margin: 0 auto; }
 .test-grid {
 display: grid;
-grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-gap: 1.5rem; max-width: 1100px; margin: 0 auto;
+grid-template-columns: repeat(3, 1fr);
+gap: 1.5rem;
 }
 .test-card {
 background: var(–cream);
-border-radius: 20px; padding: 2rem;
-border: 1px solid rgba(212,168,67,0.15);
-transition: transform 0.3s;
+border-radius: var(–radius-lg); padding: 2rem;
+border: 1px solid var(–border);
+transition: all 0.3s; position: relative;
+display: flex; flex-direction: column;
 }
-.test-card:hover { transform: translateY(-4px); }
-.stars { color: var(–gold); font-size: 1rem; margin-bottom: 0.8rem; letter-spacing: 2px; }
-.test-card p { color: var(–text); font-size: 0.93rem; line-height: 1.7; font-style: italic; }
+.test-card:hover { transform: translateY(-5px); box-shadow: var(–shadow-lg); }
+.test-card::before {
+content: ‘”’;
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 5rem; color: var(–gold); opacity: 0.2;
+position: absolute; top: 0.5rem; left: 1.2rem; line-height: 1;
+}
+.stars { color: var(–gold); font-size: 0.9rem; letter-spacing: 3px; margin-bottom: 1rem; }
+.test-card p { color: var(–text); font-size: 0.93rem; line-height: 1.72; font-style: italic; flex: 1; }
 .test-author {
-display: flex; align-items: center; gap: 0.8rem;
-margin-top: 1.2rem;
+display: flex; align-items: center; gap: 0.9rem;
+margin-top: 1.5rem; padding-top: 1.2rem;
+border-top: 1px solid var(–border);
 }
 .author-avatar {
-width: 42px; height: 42px; border-radius: 50%;
+width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0;
 background: linear-gradient(135deg, var(–blue), var(–gold));
 display: flex; align-items: center; justify-content: center;
 color: white; font-weight: 700; font-size: 1rem;
 }
-.author-info h5 { font-size: 0.9rem; font-weight: 600; color: var(–dark-blue); }
-.author-info span { font-size: 0.8rem; color: var(–muted); }
+.author-info h5 { font-size: 0.9rem; font-weight: 600; color: var(–blue-dark); }
+.author-info span { font-size: 0.78rem; color: var(–muted); }
 
-/* ── CTA SECTION ── */
-.cta-section {
-background: var(–gold);
-padding: 5rem;
-text-align: center;
+/* ═══════════════════════════════════════
+FAQ
+═══════════════════════════════════════ */
+.faq { padding: clamp(4rem, 8vw, 8rem) 0; background: var(–cream); }
+.faq-inner {
+display: grid; grid-template-columns: 1fr 1.6fr;
+gap: clamp(3rem, 5vw, 6rem); align-items: start;
 }
-.cta-section h2 {
-font-family: ‘Playfair Display’, serif;
-font-size: clamp(2rem, 4vw, 3rem);
-color: white; margin-bottom: 1rem;
+.faq-list { display: flex; flex-direction: column; gap: 0.8rem; }
+.faq-item {
+background: white; border-radius: var(–radius);
+border: 1px solid var(–border); overflow: hidden;
 }
-.cta-section p { color: rgba(255,255,255,0.85); font-size: 1.1rem; margin-bottom: 2rem; }
-.btn-white {
-background: white; color: var(–gold);
-border: none; padding: 0.9rem 2.5rem;
-border-radius: 50px; font-weight: 700;
-font-size: 1rem; font-family: ‘DM Sans’, sans-serif;
-cursor: pointer; transition: all 0.25s;
-box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+.faq-q {
+display: flex; justify-content: space-between; align-items: center;
+padding: 1.2rem 1.5rem; cursor: pointer;
+font-weight: 600; font-size: 0.95rem; color: var(–blue-dark);
+transition: background 0.2s; gap: 1rem;
 }
-.btn-white:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+.faq-q:hover { background: var(–blue-light); }
+.faq-q .chevron {
+width: 20px; height: 20px; border-radius: 50%;
+background: var(–blue-light); color: var(–blue);
+display: flex; align-items: center; justify-content: center;
+font-size: 0.7rem; flex-shrink: 0; transition: transform 0.3s;
+}
+.faq-item.open .chevron { transform: rotate(180deg); background: var(–blue); color: white; }
+.faq-a {
+max-height: 0; overflow: hidden;
+transition: max-height 0.35s ease, padding 0.3s;
+font-size: 0.92rem; color: var(–muted); line-height: 1.7;
+padding: 0 1.5rem;
+}
+.faq-item.open .faq-a { max-height: 200px; padding: 0 1.5rem 1.3rem; }
 
-/* ── FOOTER ── */
-footer {
-background: var(–dark-blue);
-padding: 3rem 5%;
+/* ═══════════════════════════════════════
+CTA BAND
+═══════════════════════════════════════ */
+.cta-band {
+padding: clamp(5rem, 8vw, 8rem) 0;
+background: linear-gradient(135deg, var(–gold) 0%, #b07d10 100%);
+text-align: center; position: relative; overflow: hidden;
+}
+.cta-band::before {
+content: ‘’;
+position: absolute; top: -60px; left: 50%; transform: translateX(-50%);
+width: 600px; height: 300px;
+background: rgba(255,255,255,0.06); border-radius: 50%;
+}
+.cta-band h2 {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 700;
+color: white; margin-bottom: 1rem; position: relative; z-index: 1;
+}
+.cta-band p {
+color: rgba(255,255,255,0.85); font-size: clamp(1rem, 1.5vw, 1.15rem);
+margin-bottom: 2.5rem; max-width: 520px; margin-left: auto; margin-right: auto;
+line-height: 1.7; position: relative; z-index: 1;
+}
+.cta-btns { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; position: relative; z-index: 1; }
+
+/* ═══════════════════════════════════════
+FOOTER
+═══════════════════════════════════════ */
+footer { background: var(–blue-dark); color: rgba(255,255,255,0.7); }
+.footer-top {
+padding: clamp(3rem, 6vw, 5rem) 0;
 display: grid;
 grid-template-columns: 2fr 1fr 1fr 1fr;
-gap: 2rem;
+gap: clamp(2rem, 4vw, 4rem);
 }
-.footer-brand .nav-logo { font-size: 1.5rem; color: white; }
-.footer-brand .nav-logo span { color: var(–gold); }
-.footer-brand p { color: rgba(255,255,255,0.55); font-size: 0.88rem; line-height: 1.7; margin-top: 0.8rem; max-width: 260px; }
-.footer-col h4 { color: var(–gold); font-size: 0.85rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1rem; }
-.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
-.footer-col ul li a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.88rem; transition: color 0.2s; }
-.footer-col ul li a:hover { color: var(–gold); }
+.footer-brand .nav-brand { color: white; font-size: 1.6rem; }
+.footer-brand p { font-size: 0.9rem; line-height: 1.72; margin-top: 1rem; max-width: 280px; }
+.social-links { display: flex; gap: 0.8rem; margin-top: 1.5rem; flex-wrap: wrap; }
+.social-link {
+width: 38px; height: 38px; border-radius: 10px;
+background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.12);
+display: flex; align-items: center; justify-content: center;
+font-size: 1rem; transition: all 0.2s; color: white;
+text-decoration: none;
+}
+.social-link:hover { background: var(–gold); border-color: var(–gold); transform: translateY(-2px); }
+.footer-col h4 {
+color: var(–gold-bright); font-size: 0.8rem; font-weight: 700;
+letter-spacing: 0.1em; text-transform: uppercase;
+margin-bottom: 1.2rem;
+}
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+.footer-col ul li a {
+color: rgba(255,255,255,0.6); font-size: 0.88rem;
+transition: color 0.2s;
+}
+.footer-col ul li a:hover { color: var(–gold-bright); }
 .footer-bottom {
-background: rgba(0,0,0,0.2);
-text-align: center;
-padding: 1rem;
-color: rgba(255,255,255,0.4); font-size: 0.82rem;
+border-top: 1px solid rgba(255,255,255,0.08);
+padding: 1.5rem 0; text-align: center;
+font-size: 0.82rem; color: rgba(255,255,255,0.35);
 }
 
-/* ── ANIMATIONS ── */
+/* ═══════════════════════════════════════
+ANIMATIONS
+═══════════════════════════════════════ */
 @keyframes fadeUp {
-from { opacity: 0; transform: translateY(28px); }
+from { opacity: 0; transform: translateY(30px); }
 to { opacity: 1; transform: translateY(0); }
 }
 @keyframes float {
-0%, 100% { transform: translateY(-50%) translateY(0); }
-50% { transform: translateY(-50%) translateY(-15px); }
+0%, 100% { transform: translateY(0); }
+50% { transform: translateY(-12px); }
 }
-
-/* ── MOBILE ── */
-@media (max-width: 768px) {
-.nav-links { display: none; }
-.hero { padding: 100px 5% 60px; }
-.hero-visual { display: none; }
-.about-grid, .al-results-inner, footer { grid-template-columns: 1fr; gap: 2rem; }
-.pillars { grid-template-columns: 1fr; }
-.cta-section { padding: 4rem 5%; }
-footer { grid-template-columns: 1fr 1fr; }
-}
-
-/* ── SCROLL REVEAL ── */
 .reveal {
-opacity: 0; transform: translateY(30px);
+opacity: 0; transform: translateY(28px);
 transition: opacity 0.7s ease, transform 0.7s ease;
 }
 .reveal.visible { opacity: 1; transform: none; }
+
+/* ═══════════════════════════════════════
+RESPONSIVE — TABLET (≤ 1024px)
+═══════════════════════════════════════ */
+@media (max-width: 1024px) {
+.hero { grid-template-columns: 1fr; min-height: auto; padding-top: 72px; }
+.hero::before { display: none; }
+.hero-left { padding: 4rem clamp(1.25rem,5vw,3rem) 2rem; text-align: center; }
+.hero-desc { margin: 0 auto 2rem; }
+.hero-btns { justify-content: center; }
+.hero-proof { justify-content: center; }
+.hero-right { padding: 0 clamp(1.25rem,5vw,3rem) 4rem; }
+.float-card-1 { top: -0.5rem; left: 0; }
+.float-card-2 { bottom: 1rem; right: 0; }
+
+.stats-grid { grid-template-columns: repeat(2, 1fr); }
+.about-grid { grid-template-columns: 1fr; }
+.about-img-wrap { min-height: 280px; }
+.services-grid { grid-template-columns: repeat(2, 1fr); }
+.al-inner { grid-template-columns: 1fr; }
+.test-grid { grid-template-columns: repeat(2, 1fr); }
+.faq-inner { grid-template-columns: 1fr; }
+.footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
+}
+
+/* ═══════════════════════════════════════
+RESPONSIVE — MOBILE (≤ 640px)
+═══════════════════════════════════════ */
+@media (max-width: 640px) {
+.nav-links { display: none; }
+.nav-actions .btn { display: none; }
+.hamburger { display: flex; }
+
+.hero-right { display: none; }
+.hero-left { padding: 3rem 1.25rem 2.5rem; }
+
+.stats-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+.services-grid { grid-template-columns: 1fr; }
+.test-grid { grid-template-columns: 1fr; }
+.pillars-grid { grid-template-columns: 1fr; }
+.footer-top { grid-template-columns: 1fr; }
+.cta-btns { flex-direction: column; align-items: center; }
+}
 </style>
 
 </head>
 <body>
 
-<!-- NAV -->
+<!-- ══════ NAVBAR ══════ -->
 
-<nav>
-  <div class="nav-logo">Success<span>Path</span> Mentorship</div>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#services">Services</a></li>
-    <li><a href="#al-results">A/L Guide</a></li>
-    <li><a href="#testimonials">Stories</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-  <button class="nav-cta">Start Your Journey</button>
+<nav id="navbar">
+  <div class="container">
+    <div class="nav-inner">
+      <div class="nav-brand">Success<span>Path</span> Mentorship</div>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#al">A/L Guide</a></li>
+        <li><a href="#testimonials">Stories</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="#contact" class="btn btn-primary">Book Free Session</a>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </div>
 </nav>
 
-<!-- HERO -->
+<!-- Mobile Nav -->
 
-<section class="hero">
-  <div class="hero-content">
+<div class="mobile-nav" id="mobileNav">
+  <a href="#about" onclick="closeMenu()">About</a>
+  <a href="#services" onclick="closeMenu()">Services</a>
+  <a href="#al" onclick="closeMenu()">A/L Guide</a>
+  <a href="#testimonials" onclick="closeMenu()">Student Stories</a>
+  <a href="#faq" onclick="closeMenu()">FAQ</a>
+  <a href="#contact" class="btn btn-primary" onclick="closeMenu()">Book Free Session</a>
+</div>
+
+<!-- ══════ HERO ══════ -->
+
+<section class="hero" id="home">
+  <div class="hero-left">
     <div class="hero-badge">🎓 Sri Lanka's Trusted Mentorship Program</div>
-    <h1>Your A/L Results Are <em>Just the Beginning</em></h1>
-    <p>SuccessPath Mentorship guides Sri Lankan students from their A/L results through university, career, and beyond — with expert mentors who've walked the same path.</p>
+    <h1>
+      Your A/L Results Are
+      <em>Just the Beginning.</em>
+    </h1>
+    <p class="hero-desc">SuccessPath Mentorship guides Sri Lankan students from their A/L results through university, career selection, and beyond — with expert mentors who have walked the same path.</p>
     <div class="hero-btns">
-      <button class="btn-primary">Get Mentored Now</button>
-      <button class="btn-outline">Explore Pathways</button>
+      <a href="#contact" class="btn btn-primary">🗓️ Book Free Session</a>
+      <a href="#services" class="btn btn-outline">Explore Services</a>
+    </div>
+    <div class="hero-proof">
+      <div class="proof-avatars">
+        <div class="proof-avatar">K</div>
+        <div class="proof-avatar">R</div>
+        <div class="proof-avatar">T</div>
+        <div class="proof-avatar">A</div>
+        <div class="proof-avatar">+</div>
+      </div>
+      <div class="proof-text">
+        <strong>2,500+ students mentored</strong>
+        across Sri Lanka since 2016
+      </div>
     </div>
   </div>
-  <div class="hero-visual">
-    <!-- Animated SVG growth chart matching logo theme -->
-    <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="200" cy="200" r="190" fill="rgba(58,124,165,0.06)" stroke="rgba(58,124,165,0.1)" stroke-width="1"/>
-      <circle cx="200" cy="200" r="140" fill="rgba(212,168,67,0.06)" stroke="rgba(212,168,67,0.1)" stroke-width="1"/>
-      <!-- Bars -->
-      <rect x="80" y="280" width="32" height="60" rx="6" fill="rgba(212,168,67,0.4)"/>
-      <rect x="125" y="250" width="32" height="90" rx="6" fill="rgba(212,168,67,0.6)"/>
-      <rect x="170" y="210" width="32" height="130" rx="6" fill="rgba(212,168,67,0.8)"/>
-      <rect x="215" y="170" width="32" height="170" rx="6" fill="var(--gold)"/>
-      <!-- Arrow line -->
-      <polyline points="80,290 130,260 180,220 250,150 300,100" stroke="var(--blue)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-      <!-- Arrow head -->
-      <polygon points="300,100 285,115 315,115" fill="var(--gold)" transform="rotate(-45 300 100)"/>
-      <!-- Brain icon circle -->
-      <circle cx="175" cy="170" r="30" fill="white" stroke="rgba(212,168,67,0.3)" stroke-width="1"/>
-      <text x="175" y="178" font-size="22" text-anchor="middle" fill="var(--gold)">🧠</text>
-      <!-- Labels -->
-      <text x="200" y="380" font-family="DM Sans" font-size="14" fill="rgba(58,124,165,0.7)" text-anchor="middle">Your Growth Journey</text>
-    </svg>
+
+  <div class="hero-right">
+    <div style="position:relative; padding: 2rem 2rem 2rem 2rem;">
+      <div class="hero-card-main">
+        <h3>📊 Student Success Pathways</h3>
+        <div class="progress-list">
+          <div class="progress-item">
+            <label>State University Placement <span>95%</span></label>
+            <div class="progress-bar"><div class="progress-fill" style="width:95%"></div></div>
+          </div>
+          <div class="progress-item">
+            <label>Career Clarity After Mentoring <span>98%</span></label>
+            <div class="progress-bar"><div class="progress-fill" style="width:98%"></div></div>
+          </div>
+          <div class="progress-item">
+            <label>NCOE Interview Success <span>88%</span></label>
+            <div class="progress-bar"><div class="progress-fill" style="width:88%"></div></div>
+          </div>
+          <div class="progress-item">
+            <label>Scholarship Recipients <span>72%</span></label>
+            <div class="progress-bar"><div class="progress-fill" style="width:72%"></div></div>
+          </div>
+        </div>
+      </div>
+
+```
+  <div class="float-card float-card-1">
+    <div class="float-icon">🎉</div>
+    <div class="float-info">
+      <strong>A/L Results Released!</strong>
+      <span>Let's plan your next step</span>
+    </div>
+  </div>
+  <div class="float-card float-card-2">
+    <div class="float-icon">⭐</div>
+    <div class="float-info">
+      <strong>4.9 / 5.0 Rating</strong>
+      <span>From 2,500+ students</span>
+    </div>
+  </div>
+</div>
+```
+
   </div>
 </section>
 
-<!-- STATS -->
+<!-- ══════ STATS BAND ══════ -->
 
-<div class="stats">
-  <div class="stat-item">
-    <span class="stat-num">2,500+</span>
-    <div class="stat-label">Students Mentored</div>
-  </div>
-  <div class="stat-item">
-    <span class="stat-num">95%</span>
-    <div class="stat-label">University Placement Rate</div>
-  </div>
-  <div class="stat-item">
-    <span class="stat-num">50+</span>
-    <div class="stat-label">Expert Mentors</div>
-  </div>
-  <div class="stat-item">
-    <span class="stat-num">8+</span>
-    <div class="stat-label">Years of Impact</div>
+<div class="stats-band">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item reveal">
+        <span class="stat-num">2,500+</span>
+        <div class="stat-label">Students Mentored</div>
+      </div>
+      <div class="stat-item reveal">
+        <span class="stat-num">95%</span>
+        <div class="stat-label">University Placement Rate</div>
+      </div>
+      <div class="stat-item reveal">
+        <span class="stat-num">50+</span>
+        <div class="stat-label">Expert Mentors</div>
+      </div>
+      <div class="stat-item reveal">
+        <span class="stat-num">8+</span>
+        <div class="stat-label">Years of Impact</div>
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- ABOUT -->
+<!-- ══════ ABOUT ══════ -->
 
 <section class="about" id="about">
-  <div class="about-grid">
-    <div class="reveal">
-      <div class="section-tag">Who We Are</div>
-      <h2 class="section-title">Mentorship That Moves You Forward</h2>
-      <p class="section-sub">SuccessPath was born from a simple truth — every student deserves someone who's been there. We connect A/L students with mentors who understand Sri Lanka's unique education landscape.</p>
-      <div class="pillars">
-        <div class="pillar">
-          <div class="pillar-icon">🎯</div>
-          <h4>Goal Clarity</h4>
-          <p>Know exactly where you're headed</p>
-        </div>
-        <div class="pillar">
-          <div class="pillar-icon">🗺️</div>
-          <h4>Path Planning</h4>
-          <p>Degree & career roadmaps</p>
-        </div>
-        <div class="pillar">
-          <div class="pillar-icon">💡</div>
-          <h4>Smart Strategy</h4>
-          <p>Make the most of your results</p>
-        </div>
-        <div class="pillar">
-          <div class="pillar-icon">🤝</div>
-          <h4>Ongoing Support</h4>
-          <p>We stay with you throughout</p>
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-visual reveal">
+        <div class="about-img-wrap">
+          <div class="about-icon-big">🧠</div>
+          <h3>Think Smarter.<br>Choose Better.</h3>
+          <p>We help you understand your full potential — not just your Z-score.</p>
+          <div class="about-badge">
+            <strong>8+ Years</strong>
+            <span>of shaping futures</span>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="reveal">
-      <div class="about-card">
-        <p>"SuccessPath isn't just about getting into a university. It's about understanding yourself, your options, and your full potential — so every step you take is the right one for <em>your</em> future."</p>
-        <div style="margin-top:1.5rem; display:flex; align-items:center; gap:0.8rem;">
-          <div class="author-avatar">SP</div>
-          <div>
-            <div style="font-weight:600; font-size:0.9rem; color:var(--dark-blue);">SuccessPath Founder</div>
-            <div style="font-size:0.8rem; color:var(--muted);">Mentorship Program Director</div>
+      <div class="reveal">
+        <div class="section-tag">Who We Are</div>
+        <h2 class="section-title">Mentorship That <em>Moves You Forward</em></h2>
+        <p class="section-sub">SuccessPath was built on a simple truth — every student deserves a guide who has been there. We connect A/L students with mentors who truly understand Sri Lanka's education landscape, so no student has to navigate alone.</p>
+        <div class="pillars-grid">
+          <div class="pillar">
+            <div class="pillar-icon">🎯</div>
+            <h4>Goal Clarity</h4>
+            <p>Know exactly where you're headed and why</p>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon">🗺️</div>
+            <h4>Path Planning</h4>
+            <p>Degree & career roadmaps built for you</p>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon">💡</div>
+            <h4>Smart Strategy</h4>
+            <p>Make the most of any result you receive</p>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon">🤝</div>
+            <h4>Ongoing Support</h4>
+            <p>We stay with you throughout your journey</p>
           </div>
         </div>
       </div>
@@ -520,208 +820,317 @@ transition: opacity 0.7s ease, transform 0.7s ease;
   </div>
 </section>
 
-<!-- SERVICES -->
+<!-- ══════ SERVICES ══════ -->
 
 <section class="services" id="services">
-  <div class="services-header reveal">
-    <div class="section-tag">What We Offer</div>
-    <h2 class="section-title">Programs Built for Your Moment</h2>
-    <p class="section-sub">From the day results drop to the day you step into your career — we have a program for every stage.</p>
-  </div>
-  <div class="services-grid">
-    <div class="service-card reveal">
-      <div class="service-icon">📊</div>
-      <h3>A/L Results Analysis</h3>
-      <p>Understand what your results mean, which universities you qualify for, and the best-fit degree programmes for your profile.</p>
+  <div class="container">
+    <div class="services-header reveal">
+      <div class="section-tag">What We Offer</div>
+      <h2 class="section-title">Programs Built for <em>Your Moment</em></h2>
+      <p class="section-sub">From the day results drop to the day you step into your career — we have a program for every stage of your journey.</p>
     </div>
-    <div class="service-card reveal">
-      <div class="service-icon">🏛️</div>
-      <h3>University Application Guidance</h3>
-      <p>Step-by-step support for state university applications, private institutions, and overseas study pathways.</p>
-    </div>
-    <div class="service-card reveal">
-      <div class="service-icon">🧭</div>
-      <h3>Career Path Mentoring</h3>
-      <p>One-on-one sessions with industry professionals to align your academic choices with long-term career ambitions.</p>
-    </div>
-    <div class="service-card reveal">
-      <div class="service-icon">📝</div>
-      <h3>NCOE & Teacher Training</h3>
-      <p>Complete guidance for National College of Education applicants — interviews, documents, and preparation.</p>
-    </div>
-    <div class="service-card reveal">
-      <div class="service-icon">🌍</div>
-      <h3>Overseas Study Consulting</h3>
-      <p>Explore scholarships, external degrees, and international university options that match your budget and goals.</p>
-    </div>
-    <div class="service-card reveal">
-      <div class="service-icon">💼</div>
-      <h3>Skill Development Workshops</h3>
-      <p>English, leadership, digital skills, and interview prep — everything you need beyond the classroom.</p>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-icon">📊</div>
+        <h3>A/L Results Analysis</h3>
+        <p>Understand what your results truly mean — which universities you qualify for, Z-score interpretation, and the best-fit degree programmes for your unique profile.</p>
+        <span class="service-link">Learn more →</span>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon">🏛️</div>
+        <h3>University Application Guidance</h3>
+        <p>Step-by-step support for state university applications, UGC processes, private institution options, and overseas study pathways.</p>
+        <span class="service-link">Learn more →</span>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon">🧭</div>
+        <h3>Career Path Mentoring</h3>
+        <p>One-on-one sessions with industry professionals to align your academic choices with your long-term ambitions and personal strengths.</p>
+        <span class="service-link">Learn more →</span>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon">📝</div>
+        <h3>NCOE & Teacher Training</h3>
+        <p>Complete guidance for National College of Education applicants — interview preparation, required documents, and what to expect on the day.</p>
+        <span class="service-link">Learn more →</span>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon">🌍</div>
+        <h3>Overseas Study Consulting</h3>
+        <p>Explore scholarships, external degree programmes, and international university options that match your budget and academic goals.</p>
+        <span class="service-link">Learn more →</span>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon">💼</div>
+        <h3>Skill Development Workshops</h3>
+        <p>English communication, leadership, digital literacy, and interview preparation — everything you need to stand out beyond your results.</p>
+        <span class="service-link">Learn more →</span>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- AL RESULTS SECTION -->
+<!-- ══════ AL RESULTS SECTION ══════ -->
 
-<section class="al-results" id="al-results">
-  <div class="al-results-inner">
-    <div class="al-text reveal">
-      <div class="section-tag">For A/L 2025 Students</div>
-      <h2 class="section-title">Results Just Released? Here's Your Next Move.</h2>
-      <p class="section-sub">The A/L results are out — don't panic, don't rush. SuccessPath is here to help you make the smartest decision of your life.</p>
-      <div class="al-steps">
-        <div class="al-step">
-          <div class="step-num">1</div>
-          <div class="step-content">
-            <h4>Check Your Z-Score & Eligibility</h4>
-            <p>Understand your district quota, Z-score ranking, and which state universities you qualify for.</p>
+<section class="al-section" id="al">
+  <div class="container">
+    <div class="al-inner">
+      <div class="reveal">
+        <div class="section-tag">For A/L 2025 Students</div>
+        <h2 class="section-title">Results Just Released?<br>Here's Your <em>Next Move.</em></h2>
+        <p class="section-sub">Don't panic and don't rush. Whether your results exceeded expectations or fell short — SuccessPath helps you make the smartest decision of your life.</p>
+        <div class="al-steps">
+          <div class="al-step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>Check Your Z-Score & District Eligibility</h4>
+              <p>Understand your ranking and exactly which state universities and faculties you qualify for.</p>
+            </div>
           </div>
-        </div>
-        <div class="al-step">
-          <div class="step-num">2</div>
-          <div class="step-content">
-            <h4>Explore All Pathways</h4>
-            <p>State university, NCOE, external degree, private institution, or overseas — we map out every option.</p>
+          <div class="al-step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h4>Map Out All Pathways Available to You</h4>
+              <p>State university, NCOE, external degree, private institution, vocational, or overseas — we show you every door.</p>
+            </div>
           </div>
-        </div>
-        <div class="al-step">
-          <div class="step-num">3</div>
-          <div class="step-content">
-            <h4>Book a Free Mentorship Session</h4>
-            <p>Talk to a SuccessPath mentor who studied the same stream and made it through successfully.</p>
+          <div class="al-step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <h4>Book a Free 1-on-1 Mentorship Session</h4>
+              <p>Talk to a mentor who studied the same A/L stream and successfully navigated what you're facing now.</p>
+            </div>
           </div>
-        </div>
-        <div class="al-step">
-          <div class="step-num">4</div>
-          <div class="step-content">
-            <h4>Build Your Personalised Plan</h4>
-            <p>Get a clear 12-month roadmap tailored to your results, interests, and family situation.</p>
+          <div class="al-step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <h4>Get Your Personalised 12-Month Plan</h4>
+              <p>Walk away with a clear roadmap tailored to your results, strengths, interests, and family situation.</p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="al-card reveal">
-      <h3>🎓 University Pathways for A/L 2025</h3>
-      <ul class="pathway-list">
-        <li>State University Admission (UGC)</li>
-        <li>National College of Education (NCOE)</li>
-        <li>SLIATE Higher National Diploma</li>
-        <li>Open University of Sri Lanka (OUSL)</li>
-        <li>University of Jaffna External Degree</li>
-        <li>Private Degree (Local & International TNE)</li>
-        <li>Overseas Scholarships & Study Abroad</li>
-        <li>Vocational & Technical Pathways (TVEC)</li>
-      </ul>
-      <button class="btn-primary" style="margin-top:2rem; width:100%;">🗓️ Book Free Session</button>
-    </div>
+
+```
+  <div class="pathway-card reveal">
+    <h3>🎓 All University Pathways — 2025 A/L</h3>
+    <ul class="pathway-list">
+      <li><span class="pathway-num">1</span> State University Admission (UGC)</li>
+      <li><span class="pathway-num">2</span> National College of Education (NCOE)</li>
+      <li><span class="pathway-num">3</span> SLIATE Higher National Diploma</li>
+      <li><span class="pathway-num">4</span> Open University of Sri Lanka (OUSL)</li>
+      <li><span class="pathway-num">5</span> University of Jaffna External Degree</li>
+      <li><span class="pathway-num">6</span> Private Degree — Local & TNE Partnerships</li>
+      <li><span class="pathway-num">7</span> Overseas Scholarships & Study Abroad</li>
+      <li><span class="pathway-num">8</span> Vocational & Technical Pathways (TVEC)</li>
+    </ul>
+    <a href="#contact" class="btn btn-gold" style="width:100%; justify-content:center;">🗓️ Book Your Free Session Now</a>
+  </div>
+</div>
+```
+
   </div>
 </section>
 
-<!-- TESTIMONIALS -->
+<!-- ══════ TESTIMONIALS ══════ -->
 
 <section class="testimonials" id="testimonials">
-  <div class="test-header reveal">
-    <div class="section-tag">Student Stories</div>
-    <h2 class="section-title">From Confusion to Confidence</h2>
-  </div>
-  <div class="test-grid">
-    <div class="test-card reveal">
-      <div class="stars">★★★★★</div>
-      <p>"I had no idea what to do after my A/L results. SuccessPath not only helped me understand my options but helped me get into my dream faculty at Kelaniya University."</p>
-      <div class="test-author">
-        <div class="author-avatar">K</div>
-        <div class="author-info">
-          <h5>Kavindi S.</h5>
-          <span>University of Kelaniya — Science Faculty</span>
+  <div class="container">
+    <div class="test-header reveal">
+      <div class="section-tag">Student Stories</div>
+      <h2 class="section-title">From Confusion <em>to Confidence</em></h2>
+      <p class="section-sub">Real students. Real results. Hear how SuccessPath changed the direction of their futures.</p>
+    </div>
+    <div class="test-grid">
+      <div class="test-card reveal">
+        <div class="stars">★★★★★</div>
+        <p>"I had no idea what to do after my A/L results. SuccessPath not only helped me understand my options but guided me all the way into my dream faculty at Kelaniya University. I wouldn't have made it without them."</p>
+        <div class="test-author">
+          <div class="author-avatar">K</div>
+          <div class="author-info">
+            <h5>Kavindi S.</h5>
+            <span>University of Kelaniya — Science Faculty</span>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="test-card reveal">
-      <div class="stars">★★★★★</div>
-      <p>"My Z-score wasn't enough for engineering, but my mentor helped me discover an alternative path through SLIATE. Best decision I ever made."</p>
-      <div class="test-author">
-        <div class="author-avatar">R</div>
-        <div class="author-info">
-          <h5>Ravindu P.</h5>
-          <span>SLIATE HND Engineering — Now pursuing BSc</span>
+      <div class="test-card reveal">
+        <div class="stars">★★★★★</div>
+        <p>"My Z-score wasn't enough for engineering, but my mentor helped me discover the SLIATE pathway. It was the best alternative decision I ever made — now I'm pursuing my BSc with full confidence."</p>
+        <div class="test-author">
+          <div class="author-avatar">R</div>
+          <div class="author-info">
+            <h5>Ravindu P.</h5>
+            <span>SLIATE HND Engineering — Now BSc Undergraduate</span>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="test-card reveal">
-      <div class="stars">★★★★★</div>
-      <p>"SuccessPath's NCOE interview preparation was incredible. I got selected and I'm now training to be the teacher I always wanted to be."</p>
-      <div class="test-author">
-        <div class="author-avatar">T</div>
-        <div class="author-info">
-          <h5>Tharushi W.</h5>
-          <span>National College of Education — Maharagama</span>
+      <div class="test-card reveal">
+        <div class="stars">★★★★★</div>
+        <p>"The NCOE interview preparation sessions were incredible. I knew exactly what to expect, what documents to bring, and how to present myself. I got selected on the first attempt!"</p>
+        <div class="test-author">
+          <div class="author-avatar">T</div>
+          <div class="author-info">
+            <h5>Tharushi W.</h5>
+            <span>National College of Education — Maharagama</span>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CTA -->
+<!-- ══════ FAQ ══════ -->
 
-<section class="cta-section" id="contact">
-  <div class="reveal">
+<section class="faq" id="faq">
+  <div class="container">
+    <div class="faq-inner">
+      <div class="reveal">
+        <div class="section-tag">Got Questions?</div>
+        <h2 class="section-title">Frequently <em>Asked</em></h2>
+        <p class="section-sub">Everything you need to know about SuccessPath and how we can help you after your A/L results.</p>
+        <div style="margin-top:2rem;">
+          <a href="#contact" class="btn btn-primary">Ask Us Directly →</a>
+        </div>
+      </div>
+      <div class="faq-list reveal">
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            Is the first mentorship session really free?
+            <span class="chevron">▼</span>
+          </div>
+          <div class="faq-a">Yes, completely free. Your first session with a SuccessPath mentor has no cost. We believe every student deserves guidance, and we want you to experience the value before committing to any programme.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            My A/L results were not great — can you still help?
+            <span class="chevron">▼</span>
+          </div>
+          <div class="faq-a">Absolutely. SuccessPath specialises in helping students with all ranges of results. There are always multiple pathways available — NCOE, SLIATE, OUSL, external degrees, vocational training, and more. A lower Z-score does not mean a closed door.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            How do sessions work — online or in person?
+            <span class="chevron">▼</span>
+          </div>
+          <div class="faq-a">We offer both. Students across Sri Lanka can join via video call, and in-person sessions are available at our centres. Most students start online and find it just as effective as face-to-face mentoring.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            Which A/L streams do you cover?
+            <span class="chevron">▼</span>
+          </div>
+          <div class="faq-a">All four streams — Physical Science, Biological Science, Commerce, and Arts. Our mentor pool includes graduates and professionals from every stream, so you'll always be matched with someone who understands your path.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            Do you help with overseas university applications?
+            <span class="chevron">▼</span>
+          </div>
+          <div class="faq-a">Yes. We guide students through scholarship applications, TNE (transnational education) partnerships, and direct overseas admissions — including UK, Australia, India, and Malaysia pathways.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ CTA BAND ══════ -->
+
+<section class="cta-band" id="contact">
+  <div class="container">
     <h2>Ready to Find Your SuccessPath?</h2>
-    <p>Join thousands of Sri Lankan students who turned their A/L results into a launchpad — not a limitation.</p>
-    <button class="btn-white">Book Your Free Mentorship Session →</button>
+    <p>Join thousands of Sri Lankan students who turned their A/L results into a launchpad — not a limitation. Your first session is completely free.</p>
+    <div class="cta-btns">
+      <a href="https://wa.me/94700000000" class="btn btn-white">💬 WhatsApp Us Now</a>
+      <a href="mailto:hello@successpath.lk" class="btn btn-outline" style="border-color:white; color:white;">✉️ Send Us an Email</a>
+    </div>
   </div>
 </section>
 
-<!-- FOOTER -->
+<!-- ══════ FOOTER ══════ -->
 
 <footer>
-  <div class="footer-brand">
-    <div class="nav-logo">Success<span>Path</span></div>
-    <p>Sri Lanka's leading mentorship program for A/L students navigating their future with clarity and confidence.</p>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="nav-brand">Success<span>Path</span></div>
+        <p>Sri Lanka's leading mentorship program helping A/L students navigate their futures with clarity, confidence, and direction.</p>
+        <div class="social-links">
+          <a href="#" class="social-link" title="Facebook">📘</a>
+          <a href="#" class="social-link" title="YouTube">▶️</a>
+          <a href="#" class="social-link" title="WhatsApp">💬</a>
+          <a href="#" class="social-link" title="Instagram">📸</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Programs</h4>
+        <ul>
+          <li><a href="#">A/L Results Guide</a></li>
+          <li><a href="#">University Guidance</a></li>
+          <li><a href="#">NCOE Preparation</a></li>
+          <li><a href="#">Career Mentoring</a></li>
+          <li><a href="#">Overseas Study</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#">Z-Score Calculator</a></li>
+          <li><a href="#">University Handbook</a></li>
+          <li><a href="#">Gazette Updates</a></li>
+          <li><a href="#">Scholarship List</a></li>
+          <li><a href="#">Exam Calendar</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#">Facebook Page</a></li>
+          <li><a href="#">YouTube Channel</a></li>
+          <li><a href="#">WhatsApp Group</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
   </div>
-  <div class="footer-col">
-    <h4>Programs</h4>
-    <ul>
-      <li><a href="#">A/L Results Guide</a></li>
-      <li><a href="#">University Guidance</a></li>
-      <li><a href="#">NCOE Prep</a></li>
-      <li><a href="#">Career Mentoring</a></li>
-    </ul>
-  </div>
-  <div class="footer-col">
-    <h4>Resources</h4>
-    <ul>
-      <li><a href="#">Z-Score Calculator</a></li>
-      <li><a href="#">University Handbook</a></li>
-      <li><a href="#">Gazette Updates</a></li>
-      <li><a href="#">Scholarship List</a></li>
-    </ul>
-  </div>
-  <div class="footer-col">
-    <h4>Connect</h4>
-    <ul>
-      <li><a href="#">Facebook Page</a></li>
-      <li><a href="#">YouTube Channel</a></li>
-      <li><a href="#">WhatsApp Group</a></li>
-      <li><a href="#">Contact Us</a></li>
-    </ul>
+  <div class="footer-bottom">
+    © 2026 SuccessPath Mentorship Program. All rights reserved. | Sri Lanka 🇱🇰
   </div>
 </footer>
-<div class="footer-bottom">
-  © 2026 SuccessPath Mentorship Program. All rights reserved. | Sri Lanka
-</div>
 
 <script>
+  // Navbar scroll shadow
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // Hamburger menu
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobileNav');
+  hamburger.addEventListener('click', () => {
+    mobileNav.classList.toggle('open');
+  });
+  function closeMenu() { mobileNav.classList.remove('open'); }
+
+  // FAQ toggle
+  function toggleFaq(el) {
+    const item = el.parentElement;
+    const allItems = document.querySelectorAll('.faq-item');
+    allItems.forEach(i => { if (i !== item) i.classList.remove('open'); });
+    item.classList.toggle('open');
+  }
+
   // Scroll reveal
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        setTimeout(() => e.target.classList.add('visible'), i * 80);
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 60);
+        revealObserver.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.12 });
-  reveals.forEach(r => observer.observe(r));
+  }, { threshold: 0.1 });
+  revealEls.forEach(el => revealObserver.observe(el));
 </script>
 
 </body>
